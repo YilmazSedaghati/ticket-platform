@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Ticket</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/operatore">Ticket Platform - Operatore</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/operatore">Dashboard</a>
+                <a class="nav-link" href="/logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <a href="/operatore" class="btn btn-secondary mb-3">← Torna alla lista</a>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0" th:text="${ticket.titolo}"></h4>
+            </div>
+
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Stato:</strong>
+                        <span th:text="${ticket.stato}" th:classappend="${ticket.stato == 'DA_FARE'} ? 'badge bg-secondary' : ${ticket.stato == 'IN_CORSO'} ? 'badge bg-warning' : 'badge bg-success'">
+                        </span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Categoria:</strong>
+                        <span th:text="${ticket.categoria.nome}"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Descrizione:</strong>
+                    <p th:text="${ticket.descrizione}" class="mt-2"></p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Data Creazione:</strong>
+                        <span th:text="${#temporals.format(ticket.dataCreazione, 'dd/MM/yyyy HH:mm')}"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Ultimo Aggiornamento:</strong>
+                        <span th:text="${#temporals.format(ticket.dataAggiornamento, 'dd/MM/yyyy HH:mm')}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <strong>Categoria:</strong>
+        <span th:text="${ticket.categoria.nome}"></span>
+    </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Descrizione:</strong>
+        <p th:text="${ticket.descrizione}" class="mt-2"></p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <strong>Data Creazione:</strong>
+            <span th:text="${#temporals.format(ticket.dataCreazione, 'dd/MM/yyyy HH:mm')}"></span>
+        </div>
+        <div class="col-md-6">
+            <strong>Ultimo Aggiornamento:</strong>
+            <span th:text="${#temporals.format(ticket.dataAggiornamento, 'dd/MM/yyyy HH:mm')}"></span>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Note</h5>
+        </div>
+        <div class="card-body">
+            <!-- Lista Note Esistenti -->
+            <div th:each="nota : ${ticket.note}" class="mb-3 p-3 border rounded">
+                <div class="d-flex justify-content-between">
+                    <strong th:text="${nota.autore.nome}"></strong>
+                    <small th:text="${#temporals.format(nota.dataCreazione, 'dd/MM/yyyy HH:mm')}"></small>
+                </div>
+                <p class="mb-0 mt-2" th:text="${nota.testo}"></p>
+            </div>
+
+            <form th:action="@{/operatore/tickets/{id}/notes(id=${ticket.id})}" method="post">
+                <div class="mb-3">
+                    <label for="testo" class="form-label">Aggiungi Nota</label>
+                    <textarea class="form-control" id="testo" name="testo" rows="3" placeholder="Scrivi una nota..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Aggiungi Nota</button>
+            </form>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html>

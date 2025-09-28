@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Ticket Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/dashboard">Ticket Platform</a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text text-light me-3" th:text="'Benvenuto, ' + ${#authentication.name}"></span>
+                <a class="nav-link" href="/logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 mx-auto text-center">
+                <h1>Dashboard</h1>
+                <p class="lead">Seleziona la tua area di lavoro</p>
+                
+                <div class="row mt-5">
+                    <div class="col-md-6" sec:authorize="hasRole('ADMIN')">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Area Admin</h5>
+                                <p class="card-text">Gestisci tutti i ticket e gli operatori</p>
+                                <a href="/admin/tickets" class="btn btn-primary">Vai all'Area Admin</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6" sec:authorize="hasRole('OPERATORE')">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Area Operatore</h5>
+                                <p class="card-text">Gestisci i ticket assegnati a te</p>
+                                <a href="/operatore" class="btn btn-primary">Vai all'Area Operatore</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

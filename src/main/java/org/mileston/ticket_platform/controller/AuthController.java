@@ -1,5 +1,6 @@
 package org.mileston.ticket_platform.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -15,10 +16,14 @@ public class AuthController {
     }
     
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String dashboard(Authentication authentication) {
 
-        return "dashboard";
-
+        if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
+            return "redirect:/admin/tickets";
+        } else{
+            return "erdirect:/opertore";
+        }
+        // return "dashboard";
     }
     
 }

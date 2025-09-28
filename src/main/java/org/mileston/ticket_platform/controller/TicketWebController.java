@@ -71,6 +71,7 @@ public class TicketWebController {
 
         model.addAttribute("ticket", ticket);
         model.addAttribute("newNote", new Nota());
+        model.addAttribute("statiTicket", TicketStato.values());
 
         return "admin/tickets/detail";
     }
