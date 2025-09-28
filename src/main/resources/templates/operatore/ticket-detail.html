@@ -24,12 +24,12 @@
 
                     <div class="col-md-6">
                         <strong>Stato:</strong>
-                        <span th:if="${ticket.stato == 'DA_FARE'}" class="badge bg-secondary"
-                            th:text="${ticket.stato}"></span>
-                        <span th:if="${ticket.stato == 'IN_CORSO'}" class="badge bg-warning"
-                            th:text="${ticket.stato}"></span>
-                        <span th:if="${ticket.stato == 'COMPLETATO'}" class="badge bg-success"
-                            th:text="${ticket.stato}"></span>
+                        <span th:if="${ticket.stato.name() == 'DA_FARE'}" class="badge bg-secondary"
+                            th:text="${ticket.stato.name()}"></span>
+                        <span th:if="${ticket.stato.name() == 'IN_CORSO'}" class="badge bg-warning"
+                            th:text="${ticket.stato.name()}"></span>
+                        <span th:if="${ticket.stato.name() == 'COMPLETATO'}" class="badge bg-success"
+                            th:text="${ticket.stato.name()}"></span>
                     </div>
 
                     <div class="col-md-6">

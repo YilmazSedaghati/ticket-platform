@@ -24,16 +24,15 @@
             <a href="/admin/tickets/new" class="btn btn-primary">Nuovo Ticket</a>
         </div>
 
-        <!-- Form di ricerca -->
         <form th:action="@{/admin/tickets}" method="get" class="mb-4">
             <div class="input-group">
                 <input type="text" name="search" th:value="${search}" class="form-control"
                     placeholder="Cerca per titolo...">
                 <button type="submit" class="btn btn-outline-secondary">Cerca</button>
+                <a th:if="${search}" href="/admin/tickets" class="btn btn-outline-secondary">Reset</a>
             </div>
         </form>
 
-        <!-- Tabella ticket -->
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead class="table-dark">
@@ -52,12 +51,12 @@
                         <td th:text="${ticket.id}"></td>
                         <td th:text="${ticket.titolo}"></td>
                         <td>
-                            <span th:if="${ticket.stato == 'DA_FARE'}" class="badge bg-secondary"
-                                th:text="${ticket.stato}"></span>
-                            <span th:if="${ticket.stato == 'IN_CORSO'}" class="badge bg-warning"
-                                th:text="${ticket.stato}"></span>
-                            <span th:if="${ticket.stato == 'COMPLETATO'}" class="badge bg-success"
-                                th:text="${ticket.stato}"></span>
+                            <span th:if="${ticket.stato.name() == 'DA_FARE'}" class="badge bg-secondary"
+                                th:text="${ticket.stato.name()}">DA_FARE</span>
+                            <span th:if="${ticket.stato.name() == 'IN_CORSO'}" class="badge bg-warning"
+                                th:text="${ticket.stato.name()}">IN_CORSO</span>
+                            <span th:if="${ticket.stato.name() == 'COMPLETATO'}" class="badge bg-success"
+                                th:text="${ticket.stato.name()}">COMPLETATO</span>
                         </td>
                         <td th:text="${ticket.categoria.nome}"></td>
                         <td th:text="${ticket.operatore.nome}"></td>

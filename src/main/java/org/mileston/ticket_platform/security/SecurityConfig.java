@@ -16,6 +16,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
+                .requestMatchers("/login", "/error", "/logout").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/webjars/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/operatore/**").hasRole("OPERATORE")
@@ -29,8 +30,9 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/login?logout=true")
                 .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .permitAll()
                 );
 

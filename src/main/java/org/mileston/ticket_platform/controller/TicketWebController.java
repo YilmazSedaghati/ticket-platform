@@ -43,6 +43,7 @@ public class TicketWebController {
     public String listTickets(@RequestParam(required = false) String search, Model model) {
 
         List<Ticket> tickets;
+
         if (search != null && !search.trim().isEmpty()) {
             tickets = ticketService.searchByTitolo(search);
         } else {
@@ -50,7 +51,7 @@ public class TicketWebController {
         }
 
         model.addAttribute("tickets", tickets);
-        model.addAttribute("search", tickets);
+        model.addAttribute("search", search);
         return "admin/tickets/list";
     }
 
@@ -65,15 +66,26 @@ public class TicketWebController {
     }
 
     @GetMapping("/{id}")
-    public String ticketDetail(@PathVariable Long id, Model model) {
+    public String ticketDetail(@PathVariable(required = false) Long id, Model model) {
 
         Ticket ticket = ticketService.findById(id).orElseThrow(() -> new RuntimeException("Ticket non trovato"));
+
+        List<Nota> note = notaService.findByTicketId(id);
+        ticket.setNote(note);
 
         model.addAttribute("ticket", ticket);
         model.addAttribute("newNote", new Nota());
         model.addAttribute("statiTicket", TicketStato.values());
 
         return "admin/tickets/detail";
+    }
+
+    @PostMapping
+    public String createTicket(@ModelAttribute Ticket ticket) {
+
+        ticketService.save(ticket);
+        return "redirect:/admin/tickets";
+
     }
 
     @PostMapping("/{id}/notes")
@@ -105,8 +117,8 @@ public class TicketWebController {
     @GetMapping("/{id}/edit")
     public String editTicketForm(@PathVariable Long id, Model model) {
         Ticket ticket = ticketService.findById(id)
-            .orElseThrow(() -> new RuntimeException("Ticket non trovato"));
-        
+                .orElseThrow(() -> new RuntimeException("Ticket non trovato"));
+
         model.addAttribute("ticket", ticket);
         model.addAttribute("categorie", categoriaService.findAll());
         model.addAttribute("operatori", operatoreService.findOperatoriDisponibili());
@@ -116,13 +128,13 @@ public class TicketWebController {
     @PostMapping("/{id}/edit")
     public String updateTicket(@PathVariable Long id, @ModelAttribute Ticket ticket) {
         Ticket existingTicket = ticketService.findById(id)
-            .orElseThrow(() -> new RuntimeException("Ticket non trovato"));
-        
+                .orElseThrow(() -> new RuntimeException("Ticket non trovato"));
+
         existingTicket.setTitolo(ticket.getTitolo());
         existingTicket.setDescrizione(ticket.getDescrizione());
         existingTicket.setCategoria(ticket.getCategoria());
         existingTicket.setOperatore(ticket.getOperatore());
-        
+
         ticketService.save(existingTicket);
         return "redirect:/admin/tickets/" + id;
     }

@@ -11,76 +11,78 @@
 
 <body>
 
-    <div th:insert="~{fragments/navbar-admin :: navbar-admin}"></div>
+    <div class="d-flex flex-column min-vh-100">
 
-    <div class="container mt-4">
-        <a href="/admin/tickets" class="btn btn-secondary mb-3">← Torna alla lista</a>
+        <div th:insert="~{fragments/navbar-admin :: navbar-admin}"></div>
 
-        <div class="card">
+        <div class="container flex-grow-1 mt-4">
+            <a href="/admin/tickets" class="btn btn-secondary mb-3">← Torna alla lista</a>
 
-            <div class="card-header">
-                <h4 class="mb-0" th:text="${ticket.id != null} ? 'Modifica Ticket' : 'Nuovo Ticket'"></h4>
-            </div>
+            <div class="card">
 
-            <div class="card-body">
-                <form
-                    th:action="${ticket.id != null} ? @{/admin/tickets/{id}/edit(id=${ticket.id})} : @{/admin/tickets}"
-                    method="post">
+                <div class="card-header">
+                    <h4 class="mb-0" th:text="${ticket.id != null} ? 'Modifica Ticket' : 'Nuovo Ticket'"></h4>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="titolo" class="form-label">Titolo *</label>
-                        <input th:value="${ticket.titolo}" type="text" class="form-control" id="titolo" name="titolo"
-                            required>
-                    </div>
+                <div class="card-body">
+                    <form
+                        th:action="${ticket.id != null} ? @{/admin/tickets/{id}/edit(id=${ticket.id})} : @{/admin/tickets}"
+                        method="post">
 
-                    <div class="mb-3">
-                        <label for="descrizione" class="form-label">Descrizione *</label>
-                        <textarea th:text="${ticket.descrizione}" class="form-control" id="descrizione"
-                            name="descrizione" rows="5" required></textarea>
-                    </div>
+                        <div class="mb-3">
+                            <label for="titolo" class="form-label">Titolo *</label>
+                            <input th:value="${ticket.titolo}" type="text" class="form-control" id="titolo"
+                                name="titolo" required>
+                        </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="descrizione" class="form-label">Descrizione *</label>
+                            <textarea th:text="${ticket.descrizione}" class="form-control" id="descrizione"
+                                name="descrizione" rows="5" required></textarea>
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="categoria" class="form-label">Categoria *</label>
-                                <select class="form-select" id="categoria" name="categoria.id" required>
-                                    <option value="">Seleziona una categoria</option>
-                                    <option th:each="categoria : ${categorie}" th:value="${categoria.id}"
-                                        th:text="${categoria.nome}"
-                                        th:selected="${ticket.categoria != null && ticket.categoria.id == categoria.id}">
-                                    </option>
-                                </select>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <div class="mb-3">
+                                    <label for="categoria" class="form-label">Categoria *</label>
+                                    <select class="form-select" id="categoria" name="categoria.id" required>
+                                        <option value="">Seleziona una categoria</option>
+                                        <option th:each="categoria : ${categorie}" th:value="${categoria.id}"
+                                            th:text="${categoria.nome}"
+                                            th:selected="${ticket.categoria != null && ticket.categoria.id == categoria.id}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="operatore" class="form-label">Operatore *</label>
+                                    <select class="form-select" id="operatore" name="operatore.id" required>
+                                        <option value="">Seleziona un operatore</option>
+                                        <option th:each="operatore : ${operatori}" th:value="${operatore.id}"
+                                            th:text="${operatore.nome}"
+                                            th:selected="${ticket.operatore != null && ticket.operatore.id == operatore.id}">
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="operatore" class="form-label">Operatore *</label>
-                                <select class="form-select" id="operatore" name="operatore.id" required>
-                                    <option value="">Seleziona un operatore</option>
-                                    <option th:each="operatore : ${operatori}" th:value="${operatore.id}"
-                                        th:text="${operatore.nome}"
-                                        th:selected="${ticket.operatore != null && ticket.operatore.id == operatore.id}">
-                                    </option>
-                                </select>
-                            </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <span th:text="${ticket.id != null} ? 'Aggiorna Ticket' : 'Crea Ticket'"></span>
+                            </button>
+                            <a href="/admin/tickets" class="btn btn-secondary">Annulla</a>
                         </div>
-                    </div>
+                    </form>
 
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">
-                            <span th:text="${ticket.id != null} ? 'Aggiorna Ticket' : 'Crea Ticket'"></span>
-                        </button>
-                        <a href="/admin/tickets" class="btn btn-secondary">Annulla</a>
-                    </div>
-                </form>
-
+                </div>
             </div>
         </div>
-    </div>
 
-    <div th:insert="~{fragments/footer :: footer}"></div>
+        <div th:insert="~{fragments/footer :: footer}"></div>
 
 </body>
 

@@ -97,6 +97,10 @@
             </div>
             <div class="card-body">
 
+                <div th:if="${ticket.note.empty}" class="text-center text-muted mb-3">
+                    <p>Nessuna nota presente</p>
+                </div>
+
                 <!-- Lista Note Esistenti -->
                 <div th:each="nota : ${ticket.note}" class="mb-3 p-3 border rounded">
                     <div class="d-flex justify-content-between">
