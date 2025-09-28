@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.mileston.ticket_platform.model.Nota;
 import org.mileston.ticket_platform.model.Operatore;
 import org.mileston.ticket_platform.model.Ticket;
+import org.mileston.ticket_platform.model.TicketStato;
+import org.mileston.ticket_platform.service.NotaService;
 import org.mileston.ticket_platform.service.OperatoreService;
 import org.mileston.ticket_platform.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class OperatoreWebController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private NotaService notaService;
 
     @GetMapping
     public String dashboard(Authentication authentication, Model model) {
@@ -83,6 +88,42 @@ public class OperatoreWebController {
         operatoreService.save(operatore);
 
         return "redirect:/operatore?success=availabilityUpdated";
+    }
+
+
+    @PostMapping("/tickets/{id}/notes")
+    public String addNote(@PathVariable Long id, 
+                         @ModelAttribute("newNote") Nota newNote,
+                         Authentication authentication) {
+        
+        Operatore operatore = operatoreService.findByEmail(authentication.getName())
+            .orElseThrow(() -> new RuntimeException("Operatore non trovato"));
+        
+        Ticket ticket = ticketService.findById(id)
+            .orElseThrow(() -> new RuntimeException("Ticket non trovato"));
+
+             if (!ticket.getOperatore().getId().equals(operatore.getId())) {
+            return "redirect:/operatore?error=unauthorized";
+        }
+
+        newNote.setAutore(operatore);
+        newNote.setTicket(ticket);
+
+        notaService.save(newNote);
+        
+        return "redirect:/operatore/tickets/" + id;
+    }
+
+    @PostMapping("/tickets/{id}/stato")
+    public String updateStato(@PathVariable Long id,
+                             @RequestParam TicketStato stato,
+                             Authentication authentication) {
+        
+        Operatore operatore = operatoreService.findByEmail(authentication.getName())
+            .orElseThrow(() -> new RuntimeException("Operatore non trovato"));
+             ticketService.updateStato(id, stato, operatore.getId());
+        
+        return "redirect:/operatore/tickets/" + id;
     }
 
 }

@@ -9,22 +9,15 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-dark border-bottom" data-bs-theme="dark">
-        <div class="container">
-            <a class="navbar-brand" href="/operatore">Ticket Platform - Operatore</a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/dashboard">Dashboard</a>
-                <a class="nav-link" href="/logout">Logout</a>
-            </div>
-        </div>
-    </nav>
+
+    <div th:insert="~{fragments/navbar-operatore :: navbar-operatore}"></div>
 
     <div class="container mt-4">
         <div th:if="${param.success}" class="alert alert-success">
             <span th:if="${param.success == 'profileUpdated'}">
                 Profilo aggiornato con successo
             </span>
-            <span th:if="{param.success == 'availabilityUpdated'}">
+            <span th:if="${param.success == 'availabilityUpdated'}">
                 Disponibilità aggiornata con successo
             </span>
         </div>
@@ -114,13 +107,16 @@
                                         th:text="${ticket.stato}"></span>
                                 </small>
 
-                                <span th:text="${ticket.stato}"
-                                    th:classappend="${ticket.stato == 'DA_FARE'} ? 'badge bg-secondary':${ticket.stato == 'IN_CORSO'} ? 'badge bg-warning':'badge bg-success'">
+
                                 </span>
                                 </small>
                             </div>
 
-                            <p th:text="${#strings.abbreviate(ticket.descrizione, 100)}" class="mb-1"></p>
+                            <p class="mb-1" th:text="${#strings.abbreviate(ticket.descrizione, 100)}"></p>
+                            <small th:text="${'Categoria: ' + ticket.categoria.nome}"></small>
+
+                            <br>
+
                             <small th:text="${'Categoria: ' + ticket.categoria.nome}"></small>
 
                             <br>
@@ -132,7 +128,10 @@
                 </div>
             </div>
         </div>
+
     </div>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
 
 </body>
 

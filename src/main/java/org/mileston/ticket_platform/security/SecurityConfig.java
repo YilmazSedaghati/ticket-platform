@@ -15,23 +15,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(authz -> authz
+                .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/css/**", "/js/**", "/webjars/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/operatore/**").hasRole("OPERATORE")
                 .requestMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
+                )
+                .formLogin(form -> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/dashboard", true)
                 .permitAll()
-            )
-            .logout(logout -> logout
+                )
+                .logout(logout -> logout
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
                 .permitAll()
-            );
-        
+                );
+
         return http.build();
     }
 

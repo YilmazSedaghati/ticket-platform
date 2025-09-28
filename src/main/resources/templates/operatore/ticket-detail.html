@@ -9,15 +9,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-dark border-bottom" data-bs-theme="dark">
-        <div class="container">
-            <a class="navbar-brand" href="/operatore">Ticket Platform - Operatore</a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/operatore">Dashboard</a>
-                <a class="nav-link" href="/logout">Logout</a>
-            </div>
-        </div>
-    </nav>
+
+    <div th:insert="~{fragments/navbar-operatore :: navbar-operatore}"></div>
 
     <div class="container mt-4">
         <a href="/operatore" class="btn btn-secondary mb-3">← Torna alla lista</a>
@@ -31,9 +24,12 @@
 
                     <div class="col-md-6">
                         <strong>Stato:</strong>
-                        <span th:text="${ticket.stato}"
-                            th:classappend="${ticket.stato == 'DA_FARE'} ? 'badge bg-secondary' : ${ticket.stato == 'IN_CORSO'} ? 'badge bg-warning' : 'badge bg-success'">
-                        </span>
+                        <span th:if="${ticket.stato == 'DA_FARE'}" class="badge bg-secondary"
+                            th:text="${ticket.stato}"></span>
+                        <span th:if="${ticket.stato == 'IN_CORSO'}" class="badge bg-warning"
+                            th:text="${ticket.stato}"></span>
+                        <span th:if="${ticket.stato == 'COMPLETATO'}" class="badge bg-success"
+                            th:text="${ticket.stato}"></span>
                     </div>
 
                     <div class="col-md-6">
@@ -84,6 +80,22 @@
         </div>
     </div>
 
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Cambia Stato</h5>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/operatore/tickets/{id}/stato(id=${ticket.id})}" method="post" class="d-flex gap-2">
+                <select name="stato" class="form-select" style="width: auto;">
+                    <option value="DA_FARE" th:selected="${ticket.stato == 'DA_FARE'}">DA_FARE</option>
+                    <option value="IN_CORSO" th:selected="${ticket.stato == 'IN_CORSO'}">IN_CORSO</option>
+                    <option value="COMPLETATO" th:selected="${ticket.stato == 'COMPLETATO'}">COMPLETATO</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Aggiorna Stato</button>
+            </form>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header">
             <h5 class="mb-0">Note</h5>
@@ -108,6 +120,8 @@
             </form>
         </div>
     </div>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
 
 </body>
 
