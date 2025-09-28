@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg bg-dark border-bottom" data-bs-theme="dark">
         <div class="container">
             <a class="navbar-brand" href="/operatore">Ticket Platform - Operatore</a>
             <div class="navbar-nav ms-auto">
@@ -45,30 +45,38 @@
                 </div>
 
                 <div class="card-body">
+
                     <form th:action="@{/operatore/profile}" method="post">
+
                         <div class="mb-3">
                             <label for="form-label">Nome</label>
                             <input th:value="${operatore.nome}" class="form-control" type="text" name="nome" required>
                         </div>
+
                         <div class="mb-3">
                             <label for="form-label">Email</label>
                             <input th:value="${operatore.email}" class="form-control" type="email" name="email"
                                 required>
                         </div>
+
                         <button type="submit" class="btn btn-primary w-100">
                             Aggiorna Profilo
                         </button>
+
                     </form>
 
                     <hr>
 
                     <form th:action="@{/operatore/disponibilita}" method="post" class="mt-3">
+
                         <div class="form-check form-switch">
                             <input th:checked="${operatore.disponibile}" onchange="this.form.submit()" type="checkbox"
                                 class="form-check-input" id="disponibile">
+
                             <label class="form-check-label" for="disponibile">
                                 Sono disponibile per nuovi ticket
                             </label>
+
                             <input type="hidden" name="disponibile"
                                 th:value="${operatore.disponibile ? 'false' : 'true'}">
                         </div>
@@ -79,29 +87,46 @@
 
         <div class="col-md-8">
             <div class="card">
+
                 <div class="card-header">
                     <h5 class="mb-0">Ticket Assegnati a Me</h5>
                 </div>
+
                 <div class="card-body">
                     <div th:if="${tickets.empty}" class="text-center text-muted">
                         <p>Nessun ticket assegnato</p>
                     </div>
+
                     <div th:unless="${tickets.empty}" class="list-group">
-                        <a th:each="ticket : ${tickets}" th:href="@{/operatore/tickets/{id}(id=${ticket.id})}" class="list-group-item list-group-item-action">
+                        <a th:each="ticket : ${tickets}" th:href="@{/operatore/tickets/{id}(id=${ticket.id})}"
+                            class="list-group-item list-group-item-action">
+
                             <div class="d-flex w-100 justify-content-between">
+
                                 <h6 th:text="${ticket.titolo}" class="mb-1"></h6>
+
                                 <small>
-                                    <span th:text="${ticket.stato}" th:classappend="${ticket.stato == 'DA_FARE'} ? 'badge bg-secondary' : ${ticket.stato == IN_CORSO'} ? 'badge bg-warning' : 'badge bg-success'">
-                                    </span>
+                                    <span th:if="${ticket.stato == 'DA_FARE'}" class="badge bg-secondary"
+                                        th:text="${ticket.stato}"></span>
+                                    <span th:if="${ticket.stato == 'IN_CORSO'}" class="badge bg-warning"
+                                        th:text="${ticket.stato}"></span>
+                                    <span th:if="${ticket.stato == 'COMPLETATO'}" class="badge bg-success"
+                                        th:text="${ticket.stato}"></span>
                                 </small>
-                                <span th:text="${ticket.stato}" th:classappend="${ticket.stato == 'DA_FARE'} ? 'badge bg-secondary':${ticket.stato == 'IN_CORSO'} ? 'badge bg-warning':'badge bg-success'">
+
+                                <span th:text="${ticket.stato}"
+                                    th:classappend="${ticket.stato == 'DA_FARE'} ? 'badge bg-secondary':${ticket.stato == 'IN_CORSO'} ? 'badge bg-warning':'badge bg-success'">
                                 </span>
                                 </small>
                             </div>
+
                             <p th:text="${#strings.abbreviate(ticket.descrizione, 100)}" class="mb-1"></p>
                             <small th:text="${'Categoria: ' + ticket.categoria.nome}"></small>
+
                             <br>
-                            <small th:text="${'Creato il: ' + #temporals.format(ticket.dataCreazione, 'dd/MM/yyyy HH:mm')}"></small>
+
+                            <small
+                                th:text="${'Creato il: ' + #temporals.format(ticket.dataCreazione, 'dd/MM/yyyy HH:mm')}"></small>
                         </a>
                     </div>
                 </div>

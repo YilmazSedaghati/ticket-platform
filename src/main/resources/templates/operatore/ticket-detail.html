@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg bg-dark border-bottom" data-bs-theme="dark">
         <div class="container">
             <a class="navbar-brand" href="/operatore">Ticket Platform - Operatore</a>
             <div class="navbar-nav ms-auto">
@@ -28,11 +28,14 @@
 
             <div class="card-body">
                 <div class="row mb-3">
+
                     <div class="col-md-6">
                         <strong>Stato:</strong>
-                        <span th:text="${ticket.stato}" th:classappend="${ticket.stato == 'DA_FARE'} ? 'badge bg-secondary' : ${ticket.stato == 'IN_CORSO'} ? 'badge bg-warning' : 'badge bg-success'">
+                        <span th:text="${ticket.stato}"
+                            th:classappend="${ticket.stato == 'DA_FARE'} ? 'badge bg-secondary' : ${ticket.stato == 'IN_CORSO'} ? 'badge bg-warning' : 'badge bg-success'">
                         </span>
                     </div>
+
                     <div class="col-md-6">
                         <strong>Categoria:</strong>
                         <span th:text="${ticket.categoria.nome}"></span>
@@ -49,6 +52,7 @@
                         <strong>Data Creazione:</strong>
                         <span th:text="${#temporals.format(ticket.dataCreazione, 'dd/MM/yyyy HH:mm')}"></span>
                     </div>
+
                     <div class="col-md-6">
                         <strong>Ultimo Aggiornamento:</strong>
                         <span th:text="${#temporals.format(ticket.dataAggiornamento, 'dd/MM/yyyy HH:mm')}"></span>
@@ -56,12 +60,11 @@
                 </div>
             </div>
         </div>
-
     </div>
+
     <div class="col-md-6">
         <strong>Categoria:</strong>
         <span th:text="${ticket.categoria.nome}"></span>
-    </div>
     </div>
 
     <div class="mb-3">
@@ -74,12 +77,11 @@
             <strong>Data Creazione:</strong>
             <span th:text="${#temporals.format(ticket.dataCreazione, 'dd/MM/yyyy HH:mm')}"></span>
         </div>
+
         <div class="col-md-6">
             <strong>Ultimo Aggiornamento:</strong>
             <span th:text="${#temporals.format(ticket.dataAggiornamento, 'dd/MM/yyyy HH:mm')}"></span>
         </div>
-    </div>
-    </div>
     </div>
 
     <div class="card">
@@ -99,12 +101,12 @@
             <form th:action="@{/operatore/tickets/{id}/notes(id=${ticket.id})}" method="post">
                 <div class="mb-3">
                     <label for="testo" class="form-label">Aggiungi Nota</label>
-                    <textarea class="form-control" id="testo" name="testo" rows="3" placeholder="Scrivi una nota..." required></textarea>
+                    <textarea class="form-control" id="testo" name="testo" rows="3" placeholder="Scrivi una nota..."
+                        required></textarea>
                 </div>
                 <button type="submit" class="btn btn-success">Aggiungi Nota</button>
             </form>
         </div>
-    </div>
     </div>
 
 </body>

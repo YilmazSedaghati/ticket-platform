@@ -91,7 +91,7 @@ public class Operatore {
     }
 
     @OneToMany(mappedBy = "operatore")
-    private List<Ticket> tickets = new ArrayList<>();
+    private final List<Ticket> tickets = new ArrayList<>();
 
     public List<Ticket> getTickets() {
         return tickets;

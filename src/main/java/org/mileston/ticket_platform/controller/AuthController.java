@@ -21,7 +21,7 @@ public class AuthController {
         if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
             return "redirect:/admin/tickets";
         } else{
-            return "erdirect:/opertore";
+            return "redirect:/dashboard";
         }
         // return "dashboard";
     }

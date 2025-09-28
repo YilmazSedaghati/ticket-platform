@@ -11,7 +11,6 @@ public class PassEncoder {
         String encodedPassword = encoder.encode("password");
         System.out.println("Password 'password' criptata: " + encodedPassword);
         
-        // Genera password per "1234"
         String encodedSimple = encoder.encode("1234");
         System.out.println("Password '1234' criptata: " + encodedSimple);
     }
