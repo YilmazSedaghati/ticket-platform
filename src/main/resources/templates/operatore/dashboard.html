@@ -63,15 +63,17 @@
                     <form th:action="@{/operatore/disponibilita}" method="post" class="mt-3">
 
                         <div class="form-check form-switch">
-                            <input th:checked="${operatore.disponibile}" onchange="this.form.submit()" type="checkbox"
-                                class="form-check-input" id="disponibile">
-
-                            <label class="form-check-label" for="disponibile">
-                                Sono disponibile per nuovi ticket
-                            </label>
-
-                            <input type="hidden" name="disponibile"
-                                th:value="${operatore.disponibile ? 'false' : 'true'}">
+                            <form th:action="@{/operatore/disponibilita}" method="post" class="mt-3">
+                                <div class="form-check form-switch">
+                                    <input th:checked="${operatore.disponibile}" class="form-check-input"
+                                        type="checkbox" id="disponibileSwitch" onchange="this.form.submit()">
+                                    <label class="form-check-label" for="disponibileSwitch">
+                                        Sono disponibile per nuovi ticket
+                                    </label>
+                                    <input type="hidden" name="disponibile"
+                                        th:value="${operatore.disponibile} ? false : true">
+                                </div>
+                            </form>
                         </div>
                     </form>
                 </div>

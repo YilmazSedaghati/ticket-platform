@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .requestMatchers("/css/**", "/js/**", "/webjars/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/operatore/**").hasRole("OPERATORE")
-                .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/api/**").authenticated()
                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

@@ -13,7 +13,11 @@
         <div class="container">
             <a class="navbar-brand" href="/admin/tickets">Ticket Platform - Admin</a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/logout">Logout</a>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-link nav-link" style="border: none; background: none;">
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
     </nav>

@@ -29,29 +29,29 @@
                     </form>
                 </div>
             </div>
-        </div>
 
-        <div class="card-body">
-            <div class="row mb-3">
+            <div class="card-body">
+                <div class="row mb-3">
 
-                <div class="col-md-4">
-                    <strong>Stato:</strong>
-                    <span th:if="${ticket.stato == 'DA_FARE'}" class="badge bg-secondary"
-                        th:text="${ticket.stato}"></span>
-                    <span th:if="${ticket.stato == 'IN_CORSO'}" class="badge bg-warning"
-                        th:text="${ticket.stato}"></span>
-                    <span th:if="${ticket.stato == 'COMPLETATO'}" class="badge bg-success"
-                        th:text="${ticket.stato}"></span>
-                </div>
+                    <div class="col-md-4">
+                        <strong>Stato:</strong>
+                        <span th:if="${ticket.stato == 'DA_FARE'}" class="badge bg-secondary"
+                            th:text="${ticket.stato}"></span>
+                        <span th:if="${ticket.stato == 'IN_CORSO'}" class="badge bg-warning"
+                            th:text="${ticket.stato}"></span>
+                        <span th:if="${ticket.stato == 'COMPLETATO'}" class="badge bg-success"
+                            th:text="${ticket.stato}"></span>
+                    </div>
 
-                <div class="col-md-4">
-                    <strong>Categoria:</strong>
-                    <span th:text="${ticket.categoria.nome}"></span>
-                </div>
+                    <div class="col-md-4">
+                        <strong>Categoria:</strong>
+                        <span th:text="${ticket.categoria.nome}"></span>
+                    </div>
 
-                <div class="col-md-4">
-                    <strong>Operatore:</strong>
-                    <span th:text="${ticket.operatore.nome}"></span>
+                    <div class="col-md-4">
+                        <strong>Operatore:</strong>
+                        <span th:text="${ticket.operatore.nome}"></span>
+                    </div>
                 </div>
             </div>
         </div>
